@@ -1,3 +1,5 @@
+eset Seasons = { spring, summer, autumn, winter }.
+
 scene ecothermScene = {
 
     size = (978, 582).
@@ -8,12 +10,33 @@ scene ecothermScene = {
     backgroundTemp = loadImage(Images/temperature2.png).
     backgroundCons = loadImage(Images/consumption2.png).
 
+    coldTemp = loadImage(Images/resized/printemps.png).
+    veryColdTemp = loadImage(Images/resized/ete.png).
+    hotTemp = loadImage(Images/resized/automne.png).
+    veryHotTemp = loadImage(Images/resized/hiver.png).
+
     widget light = {
            display = { backgroundLight }
            init = { wdL = top. }
         }
     widget temp = {
            display = { backgroundTemp }
+           init = { wdL = top. }
+        }
+    widget springTemp = {
+           display = { coldTemp }
+           init = { wdL = top. }
+        }
+    widget summerTemp = {
+           display = { veryColdTemp }
+           init = { wdL = top. }
+        }
+    widget autumnTemp = {
+           display = { hotTemp }
+           init = { wdL = top. }
+        }
+    widget winterTemp = {
+           display = { veryHotTemp }
            init = { wdL = top. }
         }
     widget cons = {
@@ -27,7 +50,12 @@ scene ecothermScene = {
 proc Init = draw_scene(ecothermScene);
             place_at(light,ecothermScene,0,0);
             place_at(temp,ecothermScene,0,0);
-            place_at(cons,ecothermScene,0,0).
+            place_at(cons,ecothermScene,0,0);
+
+            place_at(springTemp,ecothermScene,170,220);
+            place_at(summerTemp,ecothermScene,170,220);
+            place_at(autumnTemp,ecothermScene,170,220);
+            place_at(winterTemp,ecothermScene,170,220).
 
      Light = tell(light); show(light,ecothermScene);
              get(temp); hide(temp,ecothermScene);
@@ -38,6 +66,105 @@ proc Init = draw_scene(ecothermScene);
             get(light); hide(light,ecothermScene);
             get(cons); hide(cons,ecothermScene);
             Temp.
+
+     ChoiceTemp (s: Seasons, a: Seasons) =
+
+
+         ( (s=spring) -> (
+              tell(springTemp); show(springTemp,ecothermScene);
+              get(summerTemp); hide(summerTemp,ecothermScene);
+              get(autumnTemp); hide(autumnTemp,ecothermScene);
+              get(winterTemp); hide(winterTemp,ecothermScene);
+
+              ( (a=spring) -> (
+                    get(springTemp); hide(springTemp,ecothermScene)
+                    ) )
+              +
+              ( (a=summer) -> (
+                   get(summerTemp); hide(summerTemp,ecothermScene)
+                   ) )
+              +
+              ( (a=autumn) -> (
+                   get(autumnTemp); hide(autumnTemp,ecothermScene)
+                   ) )
+              +
+              ( (a=winter) -> (
+                   get(winterTemp); hide(winterTemp,ecothermScene)
+                   ) )
+
+              ) )
+         +
+         ( (s=summer) -> (
+              tell(summerTemp); show(summerTemp,ecothermScene);
+              get(springTemp); hide(springTemp,ecothermScene);
+              get(autumnTemp); hide(autumnTemp,ecothermScene);
+              get(winterTemp); hide(winterTemp,ecothermScene);
+
+              ( (a=spring) -> (
+                    get(springTemp); hide(springTemp,ecothermScene)
+                    ) )
+              +
+              ( (a=summer) -> (
+                   get(summerTemp); hide(summerTemp,ecothermScene)
+                   ) )
+              +
+              ( (a=autumn) -> (
+                   get(autumnTemp); hide(autumnTemp,ecothermScene)
+                   ) )
+              +
+              ( (a=winter) -> (
+                   get(winterTemp); hide(winterTemp,ecothermScene)
+                   ) )
+
+              ) )
+         +
+         ( (s=autumn) -> (
+              tell(autumnTemp); show(autumnTemp,ecothermScene);
+              get(summerTemp); hide(summerTemp,ecothermScene);
+              get(springTemp); hide(springTemp,ecothermScene);
+              get(winterTemp); hide(winterTemp,ecothermScene);
+
+              ( (a=spring) -> (
+                    get(springTemp); hide(springTemp,ecothermScene)
+                    ) )
+              +
+              ( (a=summer) -> (
+                   get(summerTemp); hide(summerTemp,ecothermScene)
+                   ) )
+              +
+              ( (a=autumn) -> (
+                   get(autumnTemp); hide(autumnTemp,ecothermScene)
+                   ) )
+              +
+              ( (a=winter) -> (
+                   get(winterTemp); hide(winterTemp,ecothermScene)
+                   ) )
+
+              ) )
+         +
+         ( (s=winter) -> (
+              tell(winterTemp); show(winterTemp,ecothermScene);
+              get(springTemp); hide(springTemp,ecothermScene);
+              get(autumnTemp); hide(autumnTemp,ecothermScene);
+              get(summerTemp); hide(summerTemp,ecothermScene);
+
+              ( (a=spring) -> (
+                    get(springTemp); hide(springTemp,ecothermScene)
+                    ) )
+              +
+              ( (a=summer) -> (
+                   get(summerTemp); hide(summerTemp,ecothermScene)
+                   ) )
+              +
+              ( (a=autumn) -> (
+                   get(autumnTemp); hide(autumnTemp,ecothermScene)
+                   ) )
+              +
+              ( (a=winter) -> (
+                   get(winterTemp); hide(winterTemp,ecothermScene)
+                   ) )
+
+              ) ).
 
      Cons = tell(cons); show(cons,ecothermScene);
             get(light); hide(light,ecothermScene);
