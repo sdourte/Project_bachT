@@ -1,0 +1,37 @@
+scene ecothermScene = {
+
+    size = (978, 582).
+    layers = { top }.
+
+    background = loadImage(Images/maquette.png).
+    backgroundLight = loadImage(Images/light2.png).
+    backgroundTemp = loadImage(Images/temperature2.png).
+    backgroundCons = loadImage(Images/consumption2.png).
+
+    widget light = {
+           display = { backgroundLight }
+           init = { wdL = top. }
+        }
+    widget temp = {
+           display = { backgroundTemp }
+           init = { wdL = top. }
+        }
+    widget cons = {
+           display = { backgroundCons }
+           init = { wdL = top. }
+        }
+
+}.
+
+
+proc Init = draw_scene(ecothermScene);
+            place_at(temp,ecothermScene,0,0).
+
+     Light = tell(light); show(light,ecothermScene);
+             Light.
+
+     Temp = tell(temp); show(temp,ecothermScene);
+             Temp.
+
+     Cons = tell(cons); show(cons,ecothermScene);
+             Cons.
