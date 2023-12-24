@@ -25,13 +25,21 @@ scene ecothermScene = {
 
 
 proc Init = draw_scene(ecothermScene);
-            place_at(temp,ecothermScene,0,0).
+            place_at(light,ecothermScene,0,0);
+            place_at(temp,ecothermScene,0,0);
+            place_at(cons,ecothermScene,0,0).
 
      Light = tell(light); show(light,ecothermScene);
+             get(temp); hide(temp,ecothermScene);
+             get(cons); hide(cons,ecothermScene);
              Light.
 
      Temp = tell(temp); show(temp,ecothermScene);
-             Temp.
+            get(light); hide(light,ecothermScene);
+            get(cons); hide(cons,ecothermScene);
+            Temp.
 
      Cons = tell(cons); show(cons,ecothermScene);
-             Cons.
+            get(light); hide(light,ecothermScene);
+            get(temp); hide(temp,ecothermScene);
+            Cons.
