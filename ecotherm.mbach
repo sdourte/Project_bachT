@@ -67,102 +67,49 @@ proc Init = draw_scene(ecothermScene);
             get(cons); hide(cons,ecothermScene);
             Temp.
 
+     RemoveTemp (a: Seasons) =
+         ( (a=spring) -> (
+               get(springTemp); hide(springTemp,ecothermScene)
+               ) )
+         +
+         ( (a=summer) -> (
+              get(summerTemp); hide(summerTemp,ecothermScene)
+              ) )
+         +
+         ( (a=autumn) -> (
+              get(autumnTemp); hide(autumnTemp,ecothermScene)
+              ) )
+         +
+         ( (a=winter) -> (
+              get(winterTemp); hide(winterTemp,ecothermScene)
+              ) ).
+
      ChoiceTemp (s: Seasons, a: Seasons) =
-
-
          ( (s=spring) -> (
               tell(springTemp); show(springTemp,ecothermScene);
-              get(summerTemp); hide(summerTemp,ecothermScene);
-              get(autumnTemp); hide(autumnTemp,ecothermScene);
-              get(winterTemp); hide(winterTemp,ecothermScene);
 
-              ( (a=spring) -> (
-                    get(springTemp); hide(springTemp,ecothermScene)
-                    ) )
-              +
-              ( (a=summer) -> (
-                   get(summerTemp); hide(summerTemp,ecothermScene)
-                   ) )
-              +
-              ( (a=autumn) -> (
-                   get(autumnTemp); hide(autumnTemp,ecothermScene)
-                   ) )
-              +
-              ( (a=winter) -> (
-                   get(winterTemp); hide(winterTemp,ecothermScene)
-                   ) )
+              RemoveTemp(a)
 
               ) )
          +
          ( (s=summer) -> (
               tell(summerTemp); show(summerTemp,ecothermScene);
-              get(springTemp); hide(springTemp,ecothermScene);
-              get(autumnTemp); hide(autumnTemp,ecothermScene);
-              get(winterTemp); hide(winterTemp,ecothermScene);
 
-              ( (a=spring) -> (
-                    get(springTemp); hide(springTemp,ecothermScene)
-                    ) )
-              +
-              ( (a=summer) -> (
-                   get(summerTemp); hide(summerTemp,ecothermScene)
-                   ) )
-              +
-              ( (a=autumn) -> (
-                   get(autumnTemp); hide(autumnTemp,ecothermScene)
-                   ) )
-              +
-              ( (a=winter) -> (
-                   get(winterTemp); hide(winterTemp,ecothermScene)
-                   ) )
+              RemoveTemp(a)
 
               ) )
          +
          ( (s=autumn) -> (
               tell(autumnTemp); show(autumnTemp,ecothermScene);
-              get(summerTemp); hide(summerTemp,ecothermScene);
-              get(springTemp); hide(springTemp,ecothermScene);
-              get(winterTemp); hide(winterTemp,ecothermScene);
 
-              ( (a=spring) -> (
-                    get(springTemp); hide(springTemp,ecothermScene)
-                    ) )
-              +
-              ( (a=summer) -> (
-                   get(summerTemp); hide(summerTemp,ecothermScene)
-                   ) )
-              +
-              ( (a=autumn) -> (
-                   get(autumnTemp); hide(autumnTemp,ecothermScene)
-                   ) )
-              +
-              ( (a=winter) -> (
-                   get(winterTemp); hide(winterTemp,ecothermScene)
-                   ) )
+              RemoveTemp(a)
 
               ) )
          +
          ( (s=winter) -> (
               tell(winterTemp); show(winterTemp,ecothermScene);
-              get(springTemp); hide(springTemp,ecothermScene);
-              get(autumnTemp); hide(autumnTemp,ecothermScene);
-              get(summerTemp); hide(summerTemp,ecothermScene);
 
-              ( (a=spring) -> (
-                    get(springTemp); hide(springTemp,ecothermScene)
-                    ) )
-              +
-              ( (a=summer) -> (
-                   get(summerTemp); hide(summerTemp,ecothermScene)
-                   ) )
-              +
-              ( (a=autumn) -> (
-                   get(autumnTemp); hide(autumnTemp,ecothermScene)
-                   ) )
-              +
-              ( (a=winter) -> (
-                   get(winterTemp); hide(winterTemp,ecothermScene)
-                   ) )
+              RemoveTemp(a)
 
               ) ).
 
