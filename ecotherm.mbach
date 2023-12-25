@@ -15,14 +15,21 @@ scene ecothermScene = {
     hotTemp = loadImage(Images/resized/automne.png).
     veryHotTemp = loadImage(Images/resized/hiver.png).
 
+    springIm = loadImage(Images/spring_icone.png).
+    summerIm = loadImage(Images/summer_icone.png).
+    autumnIm = loadImage(Images/autumn_icone.png).
+    winterIm = loadImage(Images/winter_icone.png).
+
     widget light = {
            display = { backgroundLight }
            init = { wdL = top. }
         }
+
     widget temp = {
            display = { backgroundTemp }
            init = { wdL = top. }
         }
+
     widget springTemp = {
            display = { coldTemp }
            init = { wdL = top. }
@@ -39,6 +46,23 @@ scene ecothermScene = {
            display = { veryHotTemp }
            init = { wdL = top. }
         }
+    widget springIcone = {
+           display = { springIm }
+           init = { wdL = top. }
+        }
+    widget summerIcone = {
+           display = { summerIm }
+           init = { wdL = top. }
+        }
+    widget autumnIcone = {
+           display = { autumnIm }
+           init = { wdL = top. }
+        }
+    widget winterIcone = {
+           display = { winterIm }
+           init = { wdL = top. }
+        }
+
     widget cons = {
            display = { backgroundCons }
            init = { wdL = top. }
@@ -52,10 +76,15 @@ proc Init = draw_scene(ecothermScene);
             place_at(temp,ecothermScene,0,0);
             place_at(cons,ecothermScene,0,0);
 
-            place_at(springTemp,ecothermScene,170,220);
-            place_at(summerTemp,ecothermScene,170,220);
-            place_at(autumnTemp,ecothermScene,170,220);
-            place_at(winterTemp,ecothermScene,170,220).
+            place_at(springTemp,ecothermScene,600,220);
+            place_at(summerTemp,ecothermScene,600,220);
+            place_at(autumnTemp,ecothermScene,600,220);
+            place_at(winterTemp,ecothermScene,600,220);
+
+            place_at(springIcone,ecothermScene,150,220);
+            place_at(summerIcone,ecothermScene,150,220);
+            place_at(autumnIcone,ecothermScene,150,220);
+            place_at(winterIcone,ecothermScene,150,220).
 
      Light = tell(light); show(light,ecothermScene);
              get(temp); hide(temp,ecothermScene);
@@ -69,39 +98,64 @@ proc Init = draw_scene(ecothermScene);
 
      RemoveTemp (s: Seasons) =
          ( (s = spring) -> (
-             ( get(summerTemp); hide(summerTemp,ecothermScene) )
+             ( get(summerIcone); hide(summerIcone,ecothermScene);
+               get(summerTemp); hide(summerTemp,ecothermScene)
+               )
              +
-             ( get(autumnTemp); hide(autumnTemp,ecothermScene) )
+             ( get(autumnIcone); hide(autumnIcone,ecothermScene);
+               get(autumnTemp); hide(autumnTemp,ecothermScene)
+               )
              +
-             ( get(winterTemp); hide(winterTemp,ecothermScene) )
+             ( get(winterIcone); hide(winterIcone,ecothermScene);
+               get(winterTemp); hide(winterTemp,ecothermScene)
+               )
              ) )
          +
          ( (s = summer) -> (
-             ( get(springTemp); hide(springTemp,ecothermScene) )
+             ( get(springIcone); hide(springIcone,ecothermScene);
+               get(springTemp); hide(springTemp,ecothermScene)
+               )
              +
-             ( get(autumnTemp); hide(autumnTemp,ecothermScene) )
+             ( get(autumnIcone); hide(autumnIcone,ecothermScene);
+               get(autumnTemp); hide(autumnTemp,ecothermScene)
+               )
              +
-             ( get(winterTemp); hide(winterTemp,ecothermScene) )
+             ( get(winterIcone); hide(winterIcone,ecothermScene);
+               get(winterTemp); hide(winterTemp,ecothermScene)
+               )
              ) )
          +
          ( (s = autumn) -> (
-             ( get(springTemp); hide(springTemp,ecothermScene) )
+             ( get(springIcone); hide(springIcone,ecothermScene);
+               get(springTemp); hide(springTemp,ecothermScene)
+               )
              +
-             ( get(summerTemp); hide(summerTemp,ecothermScene) )
+             ( get(summerIcone); hide(summerIcone,ecothermScene);
+               get(summerTemp); hide(summerTemp,ecothermScene)
+               )
              +
-             ( get(winterTemp); hide(winterTemp,ecothermScene) )
+             ( get(winterIcone); hide(winterIcone,ecothermScene);
+               get(winterTemp); hide(winterTemp,ecothermScene)
+               )
              ) )
          +
          ( (s = winter) -> (
-             ( get(springTemp); hide(springTemp,ecothermScene) )
+             ( get(springIcone); hide(springIcone,ecothermScene);
+               get(springTemp); hide(springTemp,ecothermScene)
+               )
              +
-             ( get(summerTemp); hide(summerTemp,ecothermScene) )
+             ( get(summerIcone); hide(summerIcone,ecothermScene);
+               get(summerTemp); hide(summerTemp,ecothermScene)
+               )
              +
-             ( get(autumnTemp); hide(autumnTemp,ecothermScene) )
+             ( get(autumnIcone); hide(autumnIcone,ecothermScene);
+               get(autumnTemp); hide(autumnTemp,ecothermScene)
+               )
              ) ).
 
      ChoiceTemp (s: Seasons) =
          ( (s=spring) -> (
+              tell(springIcone); show(springIcone,ecothermScene);
               tell(springTemp); show(springTemp,ecothermScene);
 
               RemoveTemp(s)
@@ -109,6 +163,7 @@ proc Init = draw_scene(ecothermScene);
               ) )
          +
          ( (s=summer) -> (
+              tell(summerIcone); show(summerIcone,ecothermScene);
               tell(summerTemp); show(summerTemp,ecothermScene);
 
               RemoveTemp(s)
@@ -116,6 +171,7 @@ proc Init = draw_scene(ecothermScene);
               ) )
          +
          ( (s=autumn) -> (
+              tell(autumnIcone); show(autumnIcone,ecothermScene);
               tell(autumnTemp); show(autumnTemp,ecothermScene);
 
               RemoveTemp(s)
@@ -123,6 +179,7 @@ proc Init = draw_scene(ecothermScene);
               ) )
          +
          ( (s=winter) -> (
+              tell(winterIcone); show(winterIcone,ecothermScene);
               tell(winterTemp); show(winterTemp,ecothermScene);
 
               RemoveTemp(s)
