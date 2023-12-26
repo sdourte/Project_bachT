@@ -134,90 +134,106 @@ proc Init = draw_scene(ecothermScene);
             place_at(baseTempSdb,ecothermScene,x_coord(heatSdb),y_coord(heatSdb));
             show(baseTempSdb,ecothermScene);
             place_at(baseTempChambre,ecothermScene,x_coord(heatChambre),y_coord(heatChambre));
-            show(baseTempChambre,ecothermScene);
+            show(baseTempChambre,ecothermScene).
 
-            place_at(springIcone,ecothermScene,x_coord(weatherIcone),y_coord(weatherIcone));
-            place_at(summerIcone,ecothermScene,x_coord(weatherIcone),y_coord(weatherIcone));
-            place_at(autumnIcone,ecothermScene,x_coord(weatherIcone),y_coord(weatherIcone));
-            place_at(winterIcone,ecothermScene,x_coord(weatherIcone),y_coord(weatherIcone)).
+     RemoveIcone (s: Seasons) =
+         ( (s = spring) -> (
+             ( get(summerIcone); hide(summerIcone,ecothermScene) )
+             +
+             ( get(autumnIcone); hide(autumnIcone,ecothermScene) )
+             +
+             ( get(winterIcone); hide(winterIcone,ecothermScene) )
+             ) )
+         +
+         ( (s = summer) -> (
+             ( get(springIcone); hide(springIcone,ecothermScene) )
+             +
+             ( get(autumnIcone); hide(autumnIcone,ecothermScene) )
+             +
+             ( get(winterIcone); hide(winterIcone,ecothermScene) )
+             ) )
+         +
+         ( (s = autumn) -> (
+             ( get(springIcone); hide(springIcone,ecothermScene) )
+             +
+             ( get(summerIcone); hide(summerIcone,ecothermScene) )
+             +
+             ( get(winterIcone); hide(winterIcone,ecothermScene) )
+             ) )
+         +
+         ( (s = winter) -> (
+             ( get(springIcone); hide(springIcone,ecothermScene) )
+             +
+             ( get(summerIcone); hide(summerIcone,ecothermScene) )
+             +
+             ( get(autumnIcone); hide(autumnIcone,ecothermScene) )
+             ) ).
 
 
      RemoveTemp (s: Seasons) =
          ( (s = spring) -> (
-             ( get(summerIcone); hide(summerIcone,ecothermScene);
-               get(summerTempSalon); hide(summerTempSalon,ecothermScene);
+             ( get(summerTempSalon); hide(summerTempSalon,ecothermScene);
                get(summerTempSdb); hide(summerTempSdb,ecothermScene);
                get(summerTempChambre); hide(summerTempChambre,ecothermScene)
                )
              +
-             ( get(autumnIcone); hide(autumnIcone,ecothermScene);
-               get(autumnTempSalon); hide(autumnTempSalon,ecothermScene);
+             ( get(autumnTempSalon); hide(autumnTempSalon,ecothermScene);
                get(autumnTempSdb); hide(autumnTempSdb,ecothermScene);
                get(autumnTempChambre); hide(autumnTempChambre,ecothermScene)
                )
              +
-             ( get(winterIcone); hide(winterIcone,ecothermScene);
-               get(winterTempSalon); hide(winterTempSalon,ecothermScene);
+             ( get(winterTempSalon); hide(winterTempSalon,ecothermScene);
                get(winterTempSdb); hide(winterTempSdb,ecothermScene);
                get(winterTempChambre); hide(winterTempChambre,ecothermScene)
                )
              ) )
          +
          ( (s = summer) -> (
-             ( get(springIcone); hide(springIcone,ecothermScene);
-               get(springTempSalon); hide(springTempSalon,ecothermScene);
+             ( get(springTempSalon); hide(springTempSalon,ecothermScene);
                get(springTempSdb); hide(springTempSdb,ecothermScene);
                get(springTempChambre); hide(springTempChambre,ecothermScene)
                )
              +
-             ( get(autumnIcone); hide(autumnIcone,ecothermScene);
-               get(autumnTempSalon); hide(autumnTempSalon,ecothermScene);
+             ( get(autumnTempSalon); hide(autumnTempSalon,ecothermScene);
                get(autumnTempSdb); hide(autumnTempSdb,ecothermScene);
                get(autumnTempChambre); hide(autumnTempChambre,ecothermScene)
                )
              +
-             ( get(winterIcone); hide(winterIcone,ecothermScene);
-               get(winterTempSalon); hide(winterTempSalon,ecothermScene);
+             ( get(winterTempSalon); hide(winterTempSalon,ecothermScene);
                get(winterTempSdb); hide(winterTempSdb,ecothermScene);
                get(winterTempChambre); hide(winterTempChambre,ecothermScene)
                )
              ) )
          +
          ( (s = autumn) -> (
-             ( get(springIcone); hide(springIcone,ecothermScene);
-               get(springTempSalon); hide(springTempSalon,ecothermScene);
+             ( get(springTempSalon); hide(springTempSalon,ecothermScene);
                get(springTempSdb); hide(springTempSdb,ecothermScene);
                get(springTempChambre); hide(springTempChambre,ecothermScene)
                )
              +
-             ( get(summerIcone); hide(summerIcone,ecothermScene);
-               get(summerTempSalon); hide(summerTempSalon,ecothermScene);
+             ( get(summerTempSalon); hide(summerTempSalon,ecothermScene);
                get(summerTempSdb); hide(summerTempSdb,ecothermScene);
                get(summerTempChambre); hide(summerTempChambre,ecothermScene)
                )
              +
-             ( get(winterIcone); hide(winterIcone,ecothermScene);
-               get(winterTempSalon); hide(winterTempSalon,ecothermScene);
+             ( get(winterTempSalon); hide(winterTempSalon,ecothermScene);
                get(winterTempSdb); hide(winterTempSdb,ecothermScene);
                get(winterTempChambre); hide(winterTempChambre,ecothermScene)
                )
              ) )
          +
          ( (s = winter) -> (
-             ( get(springIcone); hide(springIcone,ecothermScene);
-               get(springTempSalon); hide(springTempSalon,ecothermScene);
+             ( get(springTempSalon); hide(springTempSalon,ecothermScene);
                get(springTempSdb); hide(springTempSdb,ecothermScene);
                get(springTempChambre); hide(springTempChambre,ecothermScene)
                )
              +
-             ( get(summerIcone); hide(summerIcone,ecothermScene);
-               get(summerTempSalon); hide(summerTempSalon,ecothermScene);
+             ( get(summerTempSalon); hide(summerTempSalon,ecothermScene);
                get(summerTempSdb); hide(summerTempSdb,ecothermScene);
                get(summerTempChambre); hide(summerTempChambre,ecothermScene)
                )
              +
-             ( get(autumnIcone); hide(autumnIcone,ecothermScene);
-               get(autumnTempSalon); hide(autumnTempSalon,ecothermScene);
+             ( get(autumnTempSalon); hide(autumnTempSalon,ecothermScene);
                get(autumnTempSdb); hide(autumnTempSdb,ecothermScene);
                get(autumnTempChambre); hide(autumnTempChambre,ecothermScene)
                )
@@ -225,6 +241,7 @@ proc Init = draw_scene(ecothermScene);
 
      ChoiceTemp (s: Seasons) =
          ( (s=spring) -> (
+              place_at(springIcone,ecothermScene,x_coord(weatherIcone),y_coord(weatherIcone));
               tell(springIcone); show(springIcone,ecothermScene);
 
               place_at(springTempSalon,ecothermScene,x_coord(heatSalon),y_coord(heatSalon));
@@ -234,11 +251,13 @@ proc Init = draw_scene(ecothermScene);
               place_at(springTempChambre,ecothermScene,x_coord(heatChambre),y_coord(heatChambre));
               tell(springTempChambre); show(springTempChambre,ecothermScene);
 
+              RemoveIcone(s);
               RemoveTemp(s)
 
               ) )
          +
          ( (s=summer) -> (
+              place_at(summerIcone,ecothermScene,x_coord(weatherIcone),y_coord(weatherIcone));
               tell(summerIcone); show(summerIcone,ecothermScene);
 
               place_at(summerTempSalon,ecothermScene,x_coord(heatSalon),y_coord(heatSalon));
@@ -248,11 +267,13 @@ proc Init = draw_scene(ecothermScene);
               place_at(summerTempChambre,ecothermScene,x_coord(heatChambre),y_coord(heatChambre));
               tell(summerTempChambre); show(summerTempChambre,ecothermScene);
 
+              RemoveIcone(s);
               RemoveTemp(s)
 
               ) )
          +
          ( (s=autumn) -> (
+              place_at(autumnIcone,ecothermScene,x_coord(weatherIcone),y_coord(weatherIcone));
               tell(autumnIcone); show(autumnIcone,ecothermScene);
 
               place_at(autumnTempSalon,ecothermScene,x_coord(heatSalon),y_coord(heatSalon));
@@ -262,11 +283,13 @@ proc Init = draw_scene(ecothermScene);
               place_at(autumnTempChambre,ecothermScene,x_coord(heatChambre),y_coord(heatChambre));
               tell(autumnTempChambre); show(autumnTempChambre,ecothermScene);
 
+              RemoveIcone(s);
               RemoveTemp(s)
 
               ) )
          +
          ( (s=winter) -> (
+              place_at(winterIcone,ecothermScene,x_coord(weatherIcone),y_coord(weatherIcone));
               tell(winterIcone); show(winterIcone,ecothermScene);
 
               place_at(winterTempSalon,ecothermScene,x_coord(heatSalon),y_coord(heatSalon));
@@ -276,6 +299,7 @@ proc Init = draw_scene(ecothermScene);
               place_at(winterTempChambre,ecothermScene,x_coord(heatChambre),y_coord(heatChambre));
               tell(winterTempChambre); show(winterTempChambre,ecothermScene);
 
+              RemoveIcone(s);
               RemoveTemp(s)
 
               ) ).
