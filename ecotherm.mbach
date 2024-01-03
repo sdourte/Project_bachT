@@ -223,10 +223,10 @@ proc Init = draw_scene(ecothermScene);
             place_at(baselightSdb,ecothermScene,x_coord(lightSdb),y_coord(lightSdb));
             show(baselightSdb,ecothermScene);
             place_at(baselightChambre,ecothermScene,x_coord(lightChambre),y_coord(lightChambre));
+            show(baselightChambre,ecothermScene);
             Close_window(left_br);
             Close_window(right_br);
-            Close_window(LR);
-            show(baselightChambre,ecothermScene).
+            Close_window(LR).
 
      RemoveIcone (s: Seasons) =
          ( (s = spring) -> (
