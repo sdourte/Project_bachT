@@ -1,10 +1,15 @@
 eset Seasons = { spring, summer, autumn, winter }.
+     Light = {off,weak,middle,strong}.
+
 
 eqn x_coord(weatherIcone) = 20.    y_coord(weatherIcone) = 20.
 
     x_coord(heatSalon) = 20.       y_coord(heatSalon) = 280.
     x_coord(heatChambre) = 905.     y_coord(heatChambre) = 355.
     x_coord(heatSdb) = 905.         y_coord(heatSdb) = 425.
+    x_coord(lightSalon) = 60.       y_coord(lightSalon) = 300.
+    x_coord(lightChambre) = 865.     y_coord(lightChambre) = 375.
+    x_coord(lightSdb) = 865.         y_coord(lightSdb) = 445.
 
 scene ecothermScene = {
 
@@ -23,6 +28,12 @@ scene ecothermScene = {
     summerIm = loadImage(Images/summer_icone.png).
     autumnIm = loadImage(Images/autumn_icone.png).
     winterIm = loadImage(Images/winter_icone.png).
+
+    ligthoff = loadImage(Images/ligthOff.png).
+    ligthweak = loadImage(Images/ligthWeak.png).
+    ligthmiddle = loadImage(Images/ligthMiddle.png).
+    ligthstrong = loadImage(Images/ligthStrong.png).
+
 
     widget baseTempSalon = {
            display = { neutralTemp }
@@ -103,6 +114,57 @@ scene ecothermScene = {
            init = { wdL = top. }
         }
 
+    widget baselightSalon = {
+           display = { ligthoff }
+           init = { wdL = top. }
+        }
+    widget baselightSdb = {
+           display = { ligthoff }
+           init = { wdL = top. }
+        }
+    widget baselightChambre = {
+           display = { ligthoff }
+           init = { wdL = top. }
+        }
+
+    widget weaklightSalon = {
+           display = { ligthweak }
+           init = { wdL = top. }
+        }
+    widget weaklightSdb = {
+           display = { ligthweak }
+           init = { wdL = top. }
+        }
+    widget weaklightChambre = {
+           display = { ligthweak }
+           init = { wdL = top. }
+        }
+    widget middlelightSalon = {
+           display = { ligthmiddle }
+           init = { wdL = top. }
+        }
+    widget middlelightSdb = {
+           display = { ligthmiddle }
+           init = { wdL = top. }
+        }
+    widget middlelightChambre = {
+           display = { ligthmiddle }
+           init = { wdL = top. }
+        }
+    widget stronglightSalon = {
+           display = { ligthstrong }
+           init = { wdL = top. }
+        }
+    widget stronglightSdb = {
+           display = { ligthstrong }
+           init = { wdL = top. }
+        }
+    widget stronglightChambre = {
+           display = { ligthstrong }
+           init = { wdL = top. }
+        }
+
+
 }.
 
 
@@ -113,7 +175,14 @@ proc Init = draw_scene(ecothermScene);
             place_at(baseTempSdb,ecothermScene,x_coord(heatSdb),y_coord(heatSdb));
             show(baseTempSdb,ecothermScene);
             place_at(baseTempChambre,ecothermScene,x_coord(heatChambre),y_coord(heatChambre));
-            show(baseTempChambre,ecothermScene).
+            show(baseTempChambre,ecothermScene);
+
+            place_at(baselightSalon,ecothermScene,x_coord(lightSalon),y_coord(lightSalon));
+            show(baselightSalon,ecothermScene);
+            place_at(baselightSdb,ecothermScene,x_coord(lightSdb),y_coord(lightSdb));
+            show(baselightSdb,ecothermScene);
+            place_at(baselightChambre,ecothermScene,x_coord(lightChambre),y_coord(lightChambre));
+            show(baselightChambre,ecothermScene).
 
      RemoveIcone (s: Seasons) =
          ( (s = spring) -> (
@@ -282,3 +351,133 @@ proc Init = draw_scene(ecothermScene);
               RemoveTemp(s)
 
               ) ).
+
+      
+     RemoveLight (s: Light) =
+         ( (s = weak) -> (
+             ( get(baselightSalon); hide(baselightSalon,ecothermScene);
+               get(baselightSdb); hide(baselightSdb,ecothermScene);
+               get(baselightChambre); hide(baselightChambre,ecothermScene)
+               )
+             +
+             ( get(middlelightSalon); hide(middlelightSalon,ecothermScene);
+               get(middlelightSdb); hide(middlelightSdb,ecothermScene);
+               get(middlelightChambre); hide(middlelightChambre,ecothermScene)
+               )
+             +
+             ( get(stronglightChambre); hide(stronglightChambre,ecothermScene);
+               get(stronglightSalon); hide(stronglightSalon,ecothermScene);
+               get(stronglightSdb); hide(stronglightSdb,ecothermScene)
+               )
+             ) )
+          +    
+          ( (s = middle) -> (
+             ( get(baselightSalon); hide(baselightSalon,ecothermScene);
+               get(baselightSdb); hide(baselightSdb,ecothermScene);
+               get(baselightChambre); hide(baselightChambre,ecothermScene)
+               )
+             +
+             ( get(stronglightChambre); hide(stronglightChambre,ecothermScene);
+               get(stronglightSalon); hide(stronglightSalon,ecothermScene);
+               get(stronglightSdb); hide(stronglightSdb,ecothermScene)
+               )
+            +
+            ( get(weaklightSalon); hide(weaklightSalon,ecothermScene);
+               get(weaklightSdb); hide(weaklightSdb,ecothermScene);
+               get(weaklightChambre); hide(weaklightChambre,ecothermScene)
+               )
+             ) )
+           + 
+           ( (s = strong) -> (
+             ( get(baselightSalon); hide(baselightSalon,ecothermScene);
+               get(baselightSdb); hide(baselightSdb,ecothermScene);
+               get(baselightChambre); hide(baselightChambre,ecothermScene)
+               )
+              +
+             ( get(middlelightSalon); hide(middlelightSalon,ecothermScene);
+               get(middlelightSdb); hide(middlelightSdb,ecothermScene);
+               get(middlelightChambre); hide(middlelightChambre,ecothermScene)
+               )
+              +
+            ( get(weaklightSalon); hide(weaklightSalon,ecothermScene);
+               get(weaklightSdb); hide(weaklightSdb,ecothermScene);
+               get(weaklightChambre); hide(weaklightChambre,ecothermScene)
+               )
+             ) )
+          + 
+          ( (s = off) -> (
+            ( get(weaklightSalon); hide(weaklightSalon,ecothermScene);
+               get(weaklightSdb); hide(weaklightSdb,ecothermScene);
+               get(weaklightChambre); hide(weaklightChambre,ecothermScene)
+               )
+             +
+             ( get(middlelightSalon); hide(middlelightSalon,ecothermScene);
+               get(middlelightSdb); hide(middlelightSdb,ecothermScene);
+               get(middlelightChambre); hide(middlelightChambre,ecothermScene)
+               )
+            +
+            ( get(stronglightSalon); hide(stronglightSalon,ecothermScene);
+               get(stronglightSdb); hide(stronglightSdb,ecothermScene);
+               get(stronglightChambre); hide(stronglightChambre,ecothermScene)
+               )
+             ) ).
+
+      ChoiceLight (i: Light) =
+          ( (i=off) -> (
+              
+              place_at(baselightSalon,ecothermScene,x_coord(lightSalon),y_coord(lightSalon));
+              tell(baselightSalon); show(baselightSalon,ecothermScene);
+              place_at(offLightSdb,ecothermScene,x_coord(lightSdb),y_coord(lightSdb));
+              tell(offLightSdb); show(offLightSdb,ecothermScene);
+              place_at(offLightChambre,ecothermScene,x_coord(lightChambre),y_coord(lightChambre));
+              tell(offLightChambre); show(offLightChambre,ecothermScene);
+
+
+              RemoveLight(i)
+              ) )
+          +
+          ( (i=weak) -> (
+
+              place_at(weaklightSalon,ecothermScene,x_coord(lightSalon),y_coord(lightSalon));
+              tell(weaklightSalon); show(weaklightSalon,ecothermScene);
+              place_at(weaklightSdb,ecothermScene,x_coord(lightSdb),y_coord(lightSdb));
+              tell(weaklightSdb); show(weaklightSdb,ecothermScene);
+              place_at(weaklightChambre,ecothermScene,x_coord(lightChambre),y_coord(lightChambre));
+              tell(weaklightChambre); show(weaklightChambre,ecothermScene);
+
+
+              RemoveLight(i)
+              ) )
+          +
+          ( (i=middle) -> (
+
+
+              place_at(middlelightSalon,ecothermScene,x_coord(lightSalon),y_coord(lightSalon));
+              tell(middlelightSalon); show(middlelightSalon,ecothermScene);
+              place_at(middlelightSdb,ecothermScene,x_coord(lightSdb),y_coord(lightSdb));
+              tell(middlelightSdb); show(middlelightSdb,ecothermScene);
+              place_at(middlelightChambre,ecothermScene,x_coord(lightChambre),y_coord(lightChambre));
+              tell(middlelightChambre); show(middlelightChambre,ecothermScene);
+
+
+              RemoveLight(i)
+              ) )
+          +
+          ( (i=strong) -> (
+
+            
+
+              place_at(stronglightSalon,ecothermScene,x_coord(lightSalon),y_coord(lightSalon));
+              tell(stronglightSalon); show(stronglightSalon,ecothermScene);
+              place_at(stronglightSdb,ecothermScene,x_coord(lightSdb),y_coord(lightSdb));
+              tell(stronglightSdb); show(stronglightSdb,ecothermScene);
+              place_at(stronglightChambre,ecothermScene,x_coord(lightChambre),y_coord(lightChambre));
+              tell(stronglightChambre); show(stronglightChambre,ecothermScene);
+
+              RemoveLight(i)
+              ) ).
+                
+                  
+              
+
+              
