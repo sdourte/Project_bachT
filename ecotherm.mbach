@@ -1,5 +1,7 @@
 eset Seasons = { spring, summer, autumn, winter }.
      Light = {off,weak,middle,strong}.
+     Segments = {window_left_br, window_right_br, window_lr}.
+     Names = {left_br, right_br, LR}.
 
 
 eqn x_coord(weatherIcone) = 20.    y_coord(weatherIcone) = 20.
@@ -10,13 +12,20 @@ eqn x_coord(weatherIcone) = 20.    y_coord(weatherIcone) = 20.
     x_coord(lightSalon) = 60.       y_coord(lightSalon) = 300.
     x_coord(lightChambre) = 865.     y_coord(lightChambre) = 375.
     x_coord(lightSdb) = 865.         y_coord(lightSdb) = 445.
+    
+    x_coord(window_left_br) = 740.        y_coord(window_left_br) = 0.
+    x_coord(window_right_br) = 885.       y_coord(window_right_br) = 0.
+    x_coord(window_lr) = 86.              y_coord(window_lr) = 0.
 
 scene ecothermScene = {
 
-    size = (978, 582).
-    layers = { top }.
+   size = (978, 582).
+   layers = { top }.
 
-    background = loadImage(Images/maquette.png).
+   background = loadImage(Images/maquette.png).
+
+   window_left_br = loadImage(Images/window_left_BR.png).
+   window_right_br = loadImage(Images/window_right_BR.png).
 
     neutralTemp = loadImage(Images/resized/chauffage_neutre.png).
     coldTemp = loadImage(Images/resized/printemps.png).
@@ -33,6 +42,13 @@ scene ecothermScene = {
     ligthweak = loadImage(Images/ligthWeak.png).
     ligthmiddle = loadImage(Images/ligthMiddle.png).
     ligthstrong = loadImage(Images/ligthStrong.png).
+    
+    window_left_open_br = loadImage(Images/window_left_open_BR.png).
+    window_right_open_br = loadImage(Images/window_right_open_BR.png).
+
+    window_LR = loadImage(Images/window_LR.png).
+
+    window_open_LR = loadImage(Images/window_open_LR.png).
 
 
     widget baseTempSalon = {
@@ -163,6 +179,31 @@ scene ecothermScene = {
            display = { ligthstrong }
            init = { wdL = top. }
         }
+        
+    widget window_left_close_BR = {
+          display = { window_left_br }
+          init = { wdL = top. }
+          }
+    widget window_right_close_BR = {
+          display = { window_right_br }
+          init = { wdL = top. }
+          }
+    widget window_close_living_room = {
+          display = {window_LR}
+          init = {wdL = top.}
+   }
+    widget window_left_open_BR = {
+          display = { window_left_open_br }
+          init = { wdL = top. }
+          }
+    widget window_right_open_BR = {
+          display = { window_right_open_br }
+          init = { wdL = top. }
+          }
+    widget window_open_living_room = {
+          display = {window_open_LR}
+          init = {wdL = top.}
+   }
 
 
 }.
@@ -182,6 +223,9 @@ proc Init = draw_scene(ecothermScene);
             place_at(baselightSdb,ecothermScene,x_coord(lightSdb),y_coord(lightSdb));
             show(baselightSdb,ecothermScene);
             place_at(baselightChambre,ecothermScene,x_coord(lightChambre),y_coord(lightChambre));
+            Close_window(left_br);
+            Close_window(right_br);
+            Close_window(LR).
             show(baselightChambre,ecothermScene).
 
      RemoveIcone (s: Seasons) =
@@ -476,8 +520,45 @@ proc Init = draw_scene(ecothermScene);
 
               RemoveLight(i)
               ) ).
+              
+       Open_window(name: Name) = 
+       ( (name = left_br) ->
+              ( hide(window_left_close_BR,ecothermScene);
+              place_at(window_left_open_BR,ecothermScene,x_coord(window_left_br),y_coord(window_left_br));
+              show(window_left_open_BR,ecothermScene) )
+       )
+       +
+       (  (name = right_br) ->
+              ( hide(window_right_close_BR,ecothermScene);
+              place_at(window_right_open_BR,ecothermScene,x_coord(window_right_br),y_coord(window_right_br));
+              show(window_right_open_BR,ecothermScene) )
+       )
+       +
+       (  (name = LR) ->
+              ( hide(window_close_living_room,ecothermScene);
+              place_at(window_open_living_room,ecothermScene,x_coord(window_lr),y_coord(window_lr));
+              show(window_open_living_room,ecothermScene) )
+       ).
+
+       Close_window(name: Name) = 
+       (  (name = left_br) ->
+              ( hide(window_left_open_BR,ecothermScene);
+              place_at(window_left_close_BR,ecothermScene,x_coord(window_left_br),y_coord(window_left_br));
+              show(window_left_close_BR,ecothermScene) )
+       )
+       +
+       (  (name = right_br) ->
+              ( hide(window_right_open_BR,ecothermScene);
+              place_at(window_right_close_BR,ecothermScene,x_coord(window_right_br),y_coord(window_right_br));
+              show(window_right_close_BR,ecothermScene) )
+       )
+       +
+       (  (name = LR) ->
+              ( hide(window_open_living_room,ecothermScene);
+              place_at(window_close_living_room,ecothermScene,x_coord(window_lr),y_coord(window_lr));
+              show(window_close_living_room,ecothermScene) )
+       ).
                 
                   
               
 
-              
