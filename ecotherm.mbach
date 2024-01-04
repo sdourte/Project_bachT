@@ -27,7 +27,6 @@ scene ecothermScene = {
    window_left_br = loadImage(Images/window_left_BR.png).
    window_right_br = loadImage(Images/window_right_BR.png).
 
-  neutralTemp = loadImage(Images/resized/chauffage_neutre.png).
   coldTemp = loadImage(Images/resized/printemps.png).
   veryColdTemp = loadImage(Images/resized/ete.png).
   hotTemp = loadImage(Images/resized/automne.png).
@@ -50,19 +49,6 @@ scene ecothermScene = {
 
   window_open_LR = loadImage(Images/window_open_LR.png).
 
-
-  widget baseTempSalon = {
-          display = { neutralTemp }
-          init = { wdL = top. }
-      }
-  widget baseTempSdb = {
-          display = { neutralTemp }
-          init = { wdL = top. }
-      }
-  widget baseTempChambre = {
-          display = { neutralTemp }
-          init = { wdL = top. }
-      }
 
   widget springTempSalon = {
           display = { coldTemp }
@@ -211,6 +197,9 @@ scene ecothermScene = {
 
 proc Init_scene = draw_scene(ecothermScene);
 
+            place_at(springIcone,ecothermScene,x_coord(weatherIcone),y_coord(weatherIcone));
+            tell(springIcone); show(springIcone,ecothermScene);
+
             place_at(springTempSalon,ecothermScene,x_coord(heatSalon),y_coord(heatSalon));
             tell(springTempSalon);
             show(springTempSalon,ecothermScene);
@@ -220,9 +209,6 @@ proc Init_scene = draw_scene(ecothermScene);
             place_at(springTempChambre,ecothermScene,x_coord(heatChambre),y_coord(heatChambre));
             tell(springTempChambre);
             show(springTempChambre,ecothermScene);
-
-            place_at(springIcone,ecothermScene,x_coord(weatherIcone),y_coord(weatherIcone));
-            tell(springIcone); show(springIcone,ecothermScene);
 
 
             place_at(baselightSalon,ecothermScene,x_coord(lightSalon),y_coord(lightSalon));
@@ -237,8 +223,6 @@ proc Init_scene = draw_scene(ecothermScene);
             Close_window(left_br);
             Close_window(right_br);
             Close_window(LR).
-
-
 
 
      RemoveIcone (s: Seasons) =
@@ -357,7 +341,9 @@ proc Init_scene = draw_scene(ecothermScene);
               tell(springTempChambre); show(springTempChambre,ecothermScene);
 
               RemoveIcone(s);
-              RemoveTemp(s)
+              RemoveTemp(s);
+
+              nask(springIcone); ChoiceTemp(spring)
 
               ) )
          +
@@ -373,7 +359,9 @@ proc Init_scene = draw_scene(ecothermScene);
               tell(summerTempChambre); show(summerTempChambre,ecothermScene);
 
               RemoveIcone(s);
-              RemoveTemp(s)
+              RemoveTemp(s);
+
+              nask(summerIcone); ChoiceTemp(summer)
 
               ) )
          +
@@ -389,7 +377,9 @@ proc Init_scene = draw_scene(ecothermScene);
               tell(autumnTempChambre); show(autumnTempChambre,ecothermScene);
 
               RemoveIcone(s);
-              RemoveTemp(s)
+              RemoveTemp(s);
+
+              nask(autumnIcone); ChoiceTemp(autumn)
 
               ) )
          +
@@ -405,7 +395,9 @@ proc Init_scene = draw_scene(ecothermScene);
               tell(winterTempChambre); show(winterTempChambre,ecothermScene);
 
               RemoveIcone(s);
-              RemoveTemp(s)
+              RemoveTemp(s);
+
+              nask(winterIcone); ChoiceTemp(winter)
 
               ) ).
 
@@ -576,8 +568,8 @@ proc Init_scene = draw_scene(ecothermScene);
 
 
 
-    GestionTemperature = [ChoiceTemp(winter) || ChoiceTemp(spring) || ChoiceTemp(summer) || ChoiceTemp(autumn)];Interface_Jour.
-    GestionLumiere = (ChoiceLight(off) || ChoiceLight(weak) |ChoiceLight(middle) |ChoiceLight(strong)).
+    GestionTemperature = ( nask(winterIcone); ChoiceTemp(winter) || nask(springIcone); ChoiceTemp(spring) || nask(summerIcone); ChoiceTemp(summer) || nask(autumnIcone); ChoiceTemp(autumn) );Interface_Jour.
+    GestionLumiere = (ChoiceLight(off) || ChoiceLight(weak) || ChoiceLight(middle) || ChoiceLight(strong)).
     Fermer_Fenetre = Close_window(left_br) || Close_window(right_br) || Close_window(LR).
     Ouvrir_Fenetre = Open_window(left_br) || Open_window(right_br) || Open_window(LR).
     GestionFenetre = Ouvrir_Fenetre || Fermer_Fenetre.
