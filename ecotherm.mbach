@@ -213,18 +213,15 @@ scene ecothermScene = {
 
 proc Init_scene = draw_scene(ecothermScene);
 
-            place_at(springIcone,ecothermScene,x_coord(weatherIcone),y_coord(weatherIcone));
-            tell(springIcone); show(springIcone,ecothermScene);
+            place_at(winterIcone,ecothermScene,x_coord(weatherIcone),y_coord(weatherIcone));
+            tell(winterIcone); show(winterIcone,ecothermScene);
 
-            place_at(springTempSalon,ecothermScene,x_coord(heatSalon),y_coord(heatSalon));
-            tell(springTempSalon);
-            show(springTempSalon,ecothermScene);
-            place_at(springTempSdb,ecothermScene,x_coord(heatSdb),y_coord(heatSdb));
-            tell(springTempSdb);
-            show(springTempSdb,ecothermScene);
-            place_at(springTempChambre,ecothermScene,x_coord(heatChambre),y_coord(heatChambre));
-            tell(springTempChambre);
-            show(springTempChambre,ecothermScene);
+            place_at(winterTempSalon,ecothermScene,x_coord(heatSalon),y_coord(heatSalon));
+            tell(winterTempSalon); show(winterTempSalon,ecothermScene);
+            place_at(winterTempSdb,ecothermScene,x_coord(heatSdb),y_coord(heatSdb));
+            tell(winterTempSdb); show(winterTempSdb,ecothermScene);
+            place_at(winterTempChambre,ecothermScene,x_coord(heatChambre),y_coord(heatChambre));
+            tell(winterTempChambre); show(winterTempChambre,ecothermScene);
 
 
             place_at(baselightSalon,ecothermScene,x_coord(lightSalon),y_coord(lightSalon));
