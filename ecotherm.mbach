@@ -15,7 +15,7 @@ eqn x_coord(weatherIcone) = 20.    y_coord(weatherIcone) = 20.
     x_coord(lightSdb) = 865.         y_coord(lightSdb) = 445.
     
     x_coord(window_left_br) = 740.        y_coord(window_left_br) = 0.
-    x_coord(window_right_br_closed) = 820.       y_coord(window_right_br) = 0.
+    x_coord(window_right_br) = 820.       y_coord(window_right_br) = 0.
     x_coord(window_lr) = 86.              y_coord(window_lr) = 0.
     x_coord(window_right_br_opened) = 890.
 
@@ -30,6 +30,7 @@ scene ecothermScene = {
 
    window_left_br = loadImage(Images/window_left_BR.png).
    window_right_br = loadImage(Images/window_right_BR.png).
+
 
   neutralTemp = loadImage(Images/resized/chauffage_neutre.png).
   coldTemp = loadImage(Images/resized/printemps.png).
@@ -55,6 +56,7 @@ scene ecothermScene = {
   window_open_LR = loadImage(Images/window_open_LR.png).
 
 
+
   widget baseTempSalon = {
           display = { neutralTemp }
           init = { wdL = top. }
@@ -67,6 +69,7 @@ scene ecothermScene = {
           display = { neutralTemp }
           init = { wdL = top. }
       }
+
 
   widget springTempSalon = {
           display = { coldTemp }
@@ -171,6 +174,7 @@ scene ecothermScene = {
           display = { ligthmiddle }
           init = { wdL = top. }
       }
+      
   widget stronglightSalon = {
           display = { ligthstrong }
           init = { wdL = top. }
@@ -184,6 +188,7 @@ scene ecothermScene = {
           init = { wdL = top. }
       }
       
+
   widget window_left_BR = {
         attributes = { left_br_window_status in Status.}
         display = { 
@@ -210,32 +215,42 @@ scene ecothermScene = {
         init = {
             wdL = top.
             lr_window_status = closed.}
+
   }
 
 
 }.
 
 
-proc Init = draw_scene(ecothermScene);
+proc Init_scene = draw_scene(ecothermScene);
 
-            place_at(baseTempSalon,ecothermScene,x_coord(heatSalon),y_coord(heatSalon));
-            show(baseTempSalon,ecothermScene);
-            place_at(baseTempSdb,ecothermScene,x_coord(heatSdb),y_coord(heatSdb));
-            show(baseTempSdb,ecothermScene);
-            place_at(baseTempChambre,ecothermScene,x_coord(heatChambre),y_coord(heatChambre));
-            show(baseTempChambre,ecothermScene);
+            place_at(springIcone,ecothermScene,x_coord(weatherIcone),y_coord(weatherIcone));
+            tell(springIcone); show(springIcone,ecothermScene);
+
+            place_at(springTempSalon,ecothermScene,x_coord(heatSalon),y_coord(heatSalon));
+            tell(springTempSalon);
+            show(springTempSalon,ecothermScene);
+            place_at(springTempSdb,ecothermScene,x_coord(heatSdb),y_coord(heatSdb));
+            tell(springTempSdb);
+            show(springTempSdb,ecothermScene);
+            place_at(springTempChambre,ecothermScene,x_coord(heatChambre),y_coord(heatChambre));
+            tell(springTempChambre);
+            show(springTempChambre,ecothermScene);
+
 
             place_at(baselightSalon,ecothermScene,x_coord(lightSalon),y_coord(lightSalon));
+            tell(baselightSalon);
             show(baselightSalon,ecothermScene);
             place_at(baselightSdb,ecothermScene,x_coord(lightSdb),y_coord(lightSdb));
+            tell(baselightSdb);
             show(baselightSdb,ecothermScene);
             place_at(baselightChambre,ecothermScene,x_coord(lightChambre),y_coord(lightChambre));
+            tell(baselightChambre);
             show(baselightChambre,ecothermScene);
             Place_window(left_br);
             Place_window(right_br);
-            Place_window(LR);
-            Init_windows.
-
+            Place_window(LR).
+            
      RemoveIcone (s: Seasons) =
          ( (s = spring) -> (
              ( get(summerIcone); hide(summerIcone,ecothermScene) )
@@ -354,6 +369,8 @@ proc Init = draw_scene(ecothermScene);
               RemoveIcone(s);
               RemoveTemp(s)
 
+              
+
               ) )
          +
          ( (s=summer) -> (
@@ -369,6 +386,8 @@ proc Init = draw_scene(ecothermScene);
 
               RemoveIcone(s);
               RemoveTemp(s)
+
+          
 
               ) )
          +
@@ -386,6 +405,8 @@ proc Init = draw_scene(ecothermScene);
               RemoveIcone(s);
               RemoveTemp(s)
 
+            
+
               ) )
          +
          ( (s=winter) -> (
@@ -401,6 +422,7 @@ proc Init = draw_scene(ecothermScene);
 
               RemoveIcone(s);
               RemoveTemp(s)
+
 
               ) ).
 
@@ -479,10 +501,10 @@ proc Init = draw_scene(ecothermScene);
               
               place_at(baselightSalon,ecothermScene,x_coord(lightSalon),y_coord(lightSalon));
               tell(baselightSalon); show(baselightSalon,ecothermScene);
-              place_at(offLightSdb,ecothermScene,x_coord(lightSdb),y_coord(lightSdb));
-              tell(offLightSdb); show(offLightSdb,ecothermScene);
-              place_at(offLightChambre,ecothermScene,x_coord(lightChambre),y_coord(lightChambre));
-              tell(offLightChambre); show(offLightChambre,ecothermScene);
+              place_at(baselightSdb,ecothermScene,x_coord(lightSdb),y_coord(lightSdb));
+              tell(baselightSdb); show(baselightSdb,ecothermScene);
+              place_at(baselightChambre,ecothermScene,x_coord(lightChambre),y_coord(lightChambre));
+              tell(baselightChambre); show(baselightChambre,ecothermScene);
 
 
               RemoveLight(i)
@@ -586,6 +608,25 @@ proc Init = draw_scene(ecothermScene);
             ( ( s = closed ) ->
                 (Close_window(name);
                 Window(name, opened))).
+
+
+
+
+
+    GestionTemperature =  nask(winterIcone);ChoiceTemp(winter);Interface + nask(springIcone); ChoiceTemp(spring);Interface + nask(summerIcone); ChoiceTemp(summer);Interface + nask(autumnIcone); ChoiceTemp(autumn);Interface.
+    GestionLumiere = nask(baselightSalon);ChoiceLight(off);Interface + nask(weaklightSalon);ChoiceLight(weak);Interface + nask(middlelightSalon);ChoiceLight(middle);Interface + nask(stronglightSalon);ChoiceLight(strong);Interface.
+    Fermer_Fenetre = Close_window(left_br); Close_window(right_br);Interface + Close_window(LR);Interface.
+    Ouvrir_Fenetre = Open_window(left_br); Open_window(right_br);Interface + Open_window(LR);Interface.
+    GestionFenetre = Ouvrir_Fenetre + Fermer_Fenetre.
+    Interface_Jour = GestionTemperature + GestionLumiere + GestionFenetre.
+
+    Interface = Interface_Jour.
+
+    Init =  Init_scene; Interface.
+    
+    //Init_windows.
+                
+
                   
               
 
