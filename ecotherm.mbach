@@ -2,6 +2,7 @@ eset Seasons = { spring, summer, autumn, winter }.
      Light = {off,weak,middle,strong}.
      Segments = {window_left_br, window_right_br, window_lr}.
      Names = {left_br, right_br, LR}.
+     Status = {opened, closed}.
 
 
 eqn x_coord(weatherIcone) = 20.    y_coord(weatherIcone) = 20.
@@ -14,8 +15,11 @@ eqn x_coord(weatherIcone) = 20.    y_coord(weatherIcone) = 20.
     x_coord(lightSdb) = 865.         y_coord(lightSdb) = 445.
     
     x_coord(window_left_br) = 740.        y_coord(window_left_br) = 0.
-    x_coord(window_right_br) = 885.       y_coord(window_right_br) = 0.
+    x_coord(window_right_br_closed) = 820.       y_coord(window_right_br) = 0.
     x_coord(window_lr) = 86.              y_coord(window_lr) = 0.
+    x_coord(window_right_br_opened) = 890.
+
+    state(closed) = opened.             state(opened) = closed.
 
 scene ecothermScene = {
 
@@ -27,183 +31,186 @@ scene ecothermScene = {
    window_left_br = loadImage(Images/window_left_BR.png).
    window_right_br = loadImage(Images/window_right_BR.png).
 
-    neutralTemp = loadImage(Images/resized/chauffage_neutre.png).
-    coldTemp = loadImage(Images/resized/printemps.png).
-    veryColdTemp = loadImage(Images/resized/ete.png).
-    hotTemp = loadImage(Images/resized/automne.png).
-    veryHotTemp = loadImage(Images/resized/hiver.png).
+  neutralTemp = loadImage(Images/resized/chauffage_neutre.png).
+  coldTemp = loadImage(Images/resized/printemps.png).
+  veryColdTemp = loadImage(Images/resized/ete.png).
+  hotTemp = loadImage(Images/resized/automne.png).
+  veryHotTemp = loadImage(Images/resized/hiver.png).
 
-    springIm = loadImage(Images/spring_icone.png).
-    summerIm = loadImage(Images/summer_icone.png).
-    autumnIm = loadImage(Images/autumn_icone.png).
-    winterIm = loadImage(Images/winter_icone.png).
+  springIm = loadImage(Images/spring_icone.png).
+  summerIm = loadImage(Images/summer_icone.png).
+  autumnIm = loadImage(Images/autumn_icone.png).
+  winterIm = loadImage(Images/winter_icone.png).
 
-    ligthoff = loadImage(Images/ligthOff.png).
-    ligthweak = loadImage(Images/ligthWeak.png).
-    ligthmiddle = loadImage(Images/ligthMiddle.png).
-    ligthstrong = loadImage(Images/ligthStrong.png).
-    
-    window_left_open_br = loadImage(Images/window_left_open_BR.png).
-    window_right_open_br = loadImage(Images/window_right_open_BR.png).
+  ligthoff = loadImage(Images/ligthOff.png).
+  ligthweak = loadImage(Images/ligthWeak.png).
+  ligthmiddle = loadImage(Images/ligthMiddle.png).
+  ligthstrong = loadImage(Images/ligthStrong.png).
+  
+  window_left_open_br = loadImage(Images/window_left_open_BR.png).
+  window_right_open_br = loadImage(Images/window_right_open_BR.png).
 
-    window_LR = loadImage(Images/window_LR.png).
+  window_LR = loadImage(Images/window_LR.png).
 
-    window_open_LR = loadImage(Images/window_open_LR.png).
+  window_open_LR = loadImage(Images/window_open_LR.png).
 
 
-    widget baseTempSalon = {
-           display = { neutralTemp }
-           init = { wdL = top. }
-        }
-    widget baseTempSdb = {
-           display = { neutralTemp }
-           init = { wdL = top. }
-        }
-    widget baseTempChambre = {
-           display = { neutralTemp }
-           init = { wdL = top. }
-        }
-
-    widget springTempSalon = {
-           display = { coldTemp }
-           init = { wdL = top. }
-        }
-    widget summerTempSalon = {
-           display = { veryColdTemp }
-           init = { wdL = top. }
-        }
-    widget autumnTempSalon = {
-           display = { hotTemp }
-           init = { wdL = top. }
-        }
-    widget winterTempSalon = {
-           display = { veryHotTemp }
-           init = { wdL = top. }
-        }
-    widget springTempSdb = {
-           display = { coldTemp }
-           init = { wdL = top. }
-        }
-    widget summerTempSdb = {
-           display = { veryColdTemp }
-           init = { wdL = top. }
-        }
-    widget autumnTempSdb = {
-           display = { hotTemp }
-           init = { wdL = top. }
-        }
-    widget winterTempSdb = {
-           display = { veryHotTemp }
-           init = { wdL = top. }
-        }
-    widget springTempChambre = {
-           display = { coldTemp }
-           init = { wdL = top. }
-        }
-    widget summerTempChambre = {
-           display = { veryColdTemp }
-           init = { wdL = top. }
-        }
-    widget autumnTempChambre = {
-           display = { hotTemp }
-           init = { wdL = top. }
-        }
-    widget winterTempChambre = {
-           display = { veryHotTemp }
-           init = { wdL = top. }
-        }
-
-    widget springIcone = {
-           display = { springIm }
-           init = { wdL = top. }
-        }
-    widget summerIcone = {
-           display = { summerIm }
-           init = { wdL = top. }
-        }
-    widget autumnIcone = {
-           display = { autumnIm }
-           init = { wdL = top. }
-        }
-    widget winterIcone = {
-           display = { winterIm }
-           init = { wdL = top. }
-        }
-
-    widget baselightSalon = {
-           display = { ligthoff }
-           init = { wdL = top. }
-        }
-    widget baselightSdb = {
-           display = { ligthoff }
-           init = { wdL = top. }
-        }
-    widget baselightChambre = {
-           display = { ligthoff }
-           init = { wdL = top. }
-        }
-
-    widget weaklightSalon = {
-           display = { ligthweak }
-           init = { wdL = top. }
-        }
-    widget weaklightSdb = {
-           display = { ligthweak }
-           init = { wdL = top. }
-        }
-    widget weaklightChambre = {
-           display = { ligthweak }
-           init = { wdL = top. }
-        }
-    widget middlelightSalon = {
-           display = { ligthmiddle }
-           init = { wdL = top. }
-        }
-    widget middlelightSdb = {
-           display = { ligthmiddle }
-           init = { wdL = top. }
-        }
-    widget middlelightChambre = {
-           display = { ligthmiddle }
-           init = { wdL = top. }
-        }
-    widget stronglightSalon = {
-           display = { ligthstrong }
-           init = { wdL = top. }
-        }
-    widget stronglightSdb = {
-           display = { ligthstrong }
-           init = { wdL = top. }
-        }
-    widget stronglightChambre = {
-           display = { ligthstrong }
-           init = { wdL = top. }
-        }
-        
-    widget window_left_close_BR = {
-          display = { window_left_br }
+  widget baseTempSalon = {
+          display = { neutralTemp }
           init = { wdL = top. }
-          }
-    widget window_right_close_BR = {
-          display = { window_right_br }
+      }
+  widget baseTempSdb = {
+          display = { neutralTemp }
           init = { wdL = top. }
-          }
-    widget window_close_living_room = {
-          display = {window_LR}
-          init = {wdL = top.}
-   }
-    widget window_left_open_BR = {
-          display = { window_left_open_br }
+      }
+  widget baseTempChambre = {
+          display = { neutralTemp }
           init = { wdL = top. }
-          }
-    widget window_right_open_BR = {
-          display = { window_right_open_br }
+      }
+
+  widget springTempSalon = {
+          display = { coldTemp }
           init = { wdL = top. }
-          }
-    widget window_open_living_room = {
-          display = {window_open_LR}
-          init = {wdL = top.}
-   }
+      }
+  widget summerTempSalon = {
+          display = { veryColdTemp }
+          init = { wdL = top. }
+      }
+  widget autumnTempSalon = {
+          display = { hotTemp }
+          init = { wdL = top. }
+      }
+  widget winterTempSalon = {
+          display = { veryHotTemp }
+          init = { wdL = top. }
+      }
+  widget springTempSdb = {
+          display = { coldTemp }
+          init = { wdL = top. }
+      }
+  widget summerTempSdb = {
+          display = { veryColdTemp }
+          init = { wdL = top. }
+      }
+  widget autumnTempSdb = {
+          display = { hotTemp }
+          init = { wdL = top. }
+      }
+  widget winterTempSdb = {
+          display = { veryHotTemp }
+          init = { wdL = top. }
+      }
+  widget springTempChambre = {
+          display = { coldTemp }
+          init = { wdL = top. }
+      }
+  widget summerTempChambre = {
+          display = { veryColdTemp }
+          init = { wdL = top. }
+      }
+  widget autumnTempChambre = {
+          display = { hotTemp }
+          init = { wdL = top. }
+      }
+  widget winterTempChambre = {
+          display = { veryHotTemp }
+          init = { wdL = top. }
+      }
+
+  widget springIcone = {
+          display = { springIm }
+          init = { wdL = top. }
+      }
+  widget summerIcone = {
+          display = { summerIm }
+          init = { wdL = top. }
+      }
+  widget autumnIcone = {
+          display = { autumnIm }
+          init = { wdL = top. }
+      }
+  widget winterIcone = {
+          display = { winterIm }
+          init = { wdL = top. }
+      }
+
+  widget baselightSalon = {
+          display = { ligthoff }
+          init = { wdL = top. }
+      }
+  widget baselightSdb = {
+          display = { ligthoff }
+          init = { wdL = top. }
+      }
+  widget baselightChambre = {
+          display = { ligthoff }
+          init = { wdL = top. }
+      }
+
+  widget weaklightSalon = {
+          display = { ligthweak }
+          init = { wdL = top. }
+      }
+  widget weaklightSdb = {
+          display = { ligthweak }
+          init = { wdL = top. }
+      }
+  widget weaklightChambre = {
+          display = { ligthweak }
+          init = { wdL = top. }
+      }
+  widget middlelightSalon = {
+          display = { ligthmiddle }
+          init = { wdL = top. }
+      }
+  widget middlelightSdb = {
+          display = { ligthmiddle }
+          init = { wdL = top. }
+      }
+  widget middlelightChambre = {
+          display = { ligthmiddle }
+          init = { wdL = top. }
+      }
+  widget stronglightSalon = {
+          display = { ligthstrong }
+          init = { wdL = top. }
+      }
+  widget stronglightSdb = {
+          display = { ligthstrong }
+          init = { wdL = top. }
+      }
+  widget stronglightChambre = {
+          display = { ligthstrong }
+          init = { wdL = top. }
+      }
+      
+  widget window_left_BR = {
+        attributes = { left_br_window_status in Status.}
+        display = { 
+            left_br_window_status = closed -> window_left_br.
+            left_br_window_status = opened -> window_left_open_br.}
+        init = { 
+            wdL = top. 
+            left_br_window_status = closed.}
+        }
+  widget window_right_BR = {
+        attributes = { right_br_window_status in Status.}
+        display = { 
+            right_br_window_status = closed -> window_right_br.
+            right_br_window_status = opened -> window_right_open_br. }
+        init = { 
+            wdL = top.
+            right_br_window_status = closed.}
+        }
+  widget window_LR = {
+        attributes = { lr_window_status in Status. }
+        display = { 
+            lr_window_status = closed -> window_LR.
+            lr_window_status = opened -> window_open_LR.}
+        init = {
+            wdL = top.
+            lr_window_status = closed.}
+  }
 
 
 }.
@@ -223,10 +230,11 @@ proc Init = draw_scene(ecothermScene);
             place_at(baselightSdb,ecothermScene,x_coord(lightSdb),y_coord(lightSdb));
             show(baselightSdb,ecothermScene);
             place_at(baselightChambre,ecothermScene,x_coord(lightChambre),y_coord(lightChambre));
-            Close_window(left_br);
-            Close_window(right_br);
-            Close_window(LR).
-            show(baselightChambre,ecothermScene).
+            show(baselightChambre,ecothermScene);
+            Place_window(left_br);
+            Place_window(right_br);
+            Place_window(LR);
+            Init_windows.
 
      RemoveIcone (s: Seasons) =
          ( (s = spring) -> (
@@ -523,42 +531,62 @@ proc Init = draw_scene(ecothermScene);
               
        Open_window(name: Name) = 
        ( (name = left_br) ->
-              ( hide(window_left_close_BR,ecothermScene);
-              place_at(window_left_open_BR,ecothermScene,x_coord(window_left_br),y_coord(window_left_br));
-              show(window_left_open_BR,ecothermScene) )
+              ( att(left_br_window_status,window_left_BR,ecothermScene,opened) )
        )
        +
        (  (name = right_br) ->
-              ( hide(window_right_close_BR,ecothermScene);
-              place_at(window_right_open_BR,ecothermScene,x_coord(window_right_br),y_coord(window_right_br));
-              show(window_right_open_BR,ecothermScene) )
+              ( move_to(window_right_BR,ecothermScene,x_coord(window_right_br_opened),y_coord(window_right_br));
+                att(right_br_window_status,window_right_BR,ecothermScene,opened) )
        )
        +
        (  (name = LR) ->
-              ( hide(window_close_living_room,ecothermScene);
-              place_at(window_open_living_room,ecothermScene,x_coord(window_lr),y_coord(window_lr));
-              show(window_open_living_room,ecothermScene) )
+              ( move_to(window_LR,ecothermScene,0,y_coord(window_lr));
+                att(lr_window_status,window_LR,ecothermScene,opened) )
        ).
 
        Close_window(name: Name) = 
        (  (name = left_br) ->
-              ( hide(window_left_open_BR,ecothermScene);
-              place_at(window_left_close_BR,ecothermScene,x_coord(window_left_br),y_coord(window_left_br));
-              show(window_left_close_BR,ecothermScene) )
+              ( att(left_br_window_status,window_left_BR,ecothermScene,closed) )
        )
        +
        (  (name = right_br) ->
-              ( hide(window_right_open_BR,ecothermScene);
-              place_at(window_right_close_BR,ecothermScene,x_coord(window_right_br),y_coord(window_right_br));
-              show(window_right_close_BR,ecothermScene) )
+              ( move_to(window_right_BR,ecothermScene,x_coord(window_right_br_closed),y_coord(window_right_br));
+                att(right_br_window_status,window_right_BR,ecothermScene,closed) )
        )
        +
        (  (name = LR) ->
-              ( hide(window_open_living_room,ecothermScene);
-              place_at(window_close_living_room,ecothermScene,x_coord(window_lr),y_coord(window_lr));
-              show(window_close_living_room,ecothermScene) )
+              ( move_to(window_LR,ecothermScene,x_coord(window_lr),y_coord(window_lr));
+                att(lr_window_status,window_LR,ecothermScene,closed)  )
        ).
-                
+
+        Init_windows = 
+
+            Window(left_br, opened) || Window(right_br, opened) || Window(LR, opened).
+
+        Place_window(name: Name)=
+            ( (name = left_br) ->
+                (place_at(window_left_BR,ecothermScene,x_coord(window_left_br),y_coord(window_left_br));
+                show(window_left_BR,ecothermScene)))
+            +
+            ( (name = right_br) ->
+                (place_at(window_right_BR,ecothermScene,x_coord(window_right_br_closed),y_coord(window_right_br));
+                 show(window_right_BR,ecothermScene)))
+            +
+            ( (name = LR) ->
+                (place_at(window_LR,ecothermScene,x_coord(window_lr),y_coord(window_lr));
+                 show(window_LR,ecothermScene))).
+
+
+           
+        
+        Window(name:Name, s:Status) =
+            ( ( s = opened ) ->
+                ( Open_window(name);
+                Window(name, closed)))
+            +
+            ( ( s = closed ) ->
+                (Close_window(name);
+                Window(name, opened))).
                   
               
 
