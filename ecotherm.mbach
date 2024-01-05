@@ -341,9 +341,9 @@ proc Init_scene = draw_scene(ecothermScene);
               tell(springTempChambre); show(springTempChambre,ecothermScene);
 
               RemoveIcone(s);
-              RemoveTemp(s);
+              RemoveTemp(s)
 
-              nask(springIcone); ChoiceTemp(spring)
+              
 
               ) )
          +
@@ -359,9 +359,9 @@ proc Init_scene = draw_scene(ecothermScene);
               tell(summerTempChambre); show(summerTempChambre,ecothermScene);
 
               RemoveIcone(s);
-              RemoveTemp(s);
+              RemoveTemp(s)
 
-              nask(summerIcone); ChoiceTemp(summer)
+          
 
               ) )
          +
@@ -377,9 +377,9 @@ proc Init_scene = draw_scene(ecothermScene);
               tell(autumnTempChambre); show(autumnTempChambre,ecothermScene);
 
               RemoveIcone(s);
-              RemoveTemp(s);
+              RemoveTemp(s)
 
-              nask(autumnIcone); ChoiceTemp(autumn)
+            
 
               ) )
          +
@@ -395,9 +395,8 @@ proc Init_scene = draw_scene(ecothermScene);
               tell(winterTempChambre); show(winterTempChambre,ecothermScene);
 
               RemoveIcone(s);
-              RemoveTemp(s);
+              RemoveTemp(s)
 
-              nask(winterIcone); ChoiceTemp(winter)
 
               ) ).
 
@@ -476,10 +475,10 @@ proc Init_scene = draw_scene(ecothermScene);
               
               place_at(baselightSalon,ecothermScene,x_coord(lightSalon),y_coord(lightSalon));
               tell(baselightSalon); show(baselightSalon,ecothermScene);
-              place_at(offLightSdb,ecothermScene,x_coord(lightSdb),y_coord(lightSdb));
-              tell(offLightSdb); show(offLightSdb,ecothermScene);
-              place_at(offLightChambre,ecothermScene,x_coord(lightChambre),y_coord(lightChambre));
-              tell(offLightChambre); show(offLightChambre,ecothermScene);
+              place_at(baselightSdb,ecothermScene,x_coord(lightSdb),y_coord(lightSdb));
+              tell(baselightSdb); show(baselightSdb,ecothermScene);
+              place_at(baselightChambre,ecothermScene,x_coord(lightChambre),y_coord(lightChambre));
+              tell(baselightChambre); show(baselightChambre,ecothermScene);
 
 
               RemoveLight(i)
@@ -568,12 +567,12 @@ proc Init_scene = draw_scene(ecothermScene);
 
 
 
-    GestionTemperature = ( nask(winterIcone); ChoiceTemp(winter) || nask(springIcone); ChoiceTemp(spring) || nask(summerIcone); ChoiceTemp(summer) || nask(autumnIcone); ChoiceTemp(autumn) );Interface_Jour.
-    GestionLumiere = (ChoiceLight(off) || ChoiceLight(weak) || ChoiceLight(middle) || ChoiceLight(strong)).
-    Fermer_Fenetre = Close_window(left_br) || Close_window(right_br) || Close_window(LR).
-    Ouvrir_Fenetre = Open_window(left_br) || Open_window(right_br) || Open_window(LR).
-    GestionFenetre = Ouvrir_Fenetre || Fermer_Fenetre.
-    Interface_Jour = GestionTemperature || GestionLumiere || GestionFenetre.
+    GestionTemperature =  nask(winterIcone);ChoiceTemp(winter);Interface + nask(springIcone); ChoiceTemp(spring);Interface + nask(summerIcone); ChoiceTemp(summer);Interface + nask(autumnIcone); ChoiceTemp(autumn);Interface.
+    GestionLumiere = nask(baselightSalon);ChoiceLight(off);Interface + nask(weaklightSalon);ChoiceLight(weak);Interface + nask(middlelightSalon);ChoiceLight(middle);Interface + nask(stronglightSalon);ChoiceLight(strong);Interface.
+    Fermer_Fenetre = Close_window(left_br); Close_window(right_br);Interface + Close_window(LR);Interface.
+    Ouvrir_Fenetre = Open_window(left_br); Open_window(right_br);Interface + Open_window(LR);Interface.
+    GestionFenetre = Ouvrir_Fenetre + Fermer_Fenetre.
+    Interface_Jour = GestionTemperature + GestionLumiere + GestionFenetre.
 
     Interface = Interface_Jour.
 
