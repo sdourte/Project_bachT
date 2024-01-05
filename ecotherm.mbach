@@ -18,7 +18,7 @@ eqn x_coord(weatherIcone) = 20.    y_coord(weatherIcone) = 20.
     x_coord(window_right_br) = 820.       y_coord(window_right_br) = 0.
     x_coord(window_lr) = 86.              y_coord(window_lr) = 0.
     x_coord(window_right_br_opened) = 890.
-
+    x_coord(window_left_br_opened) = 670.
     state(closed) = opened.             state(opened) = closed.
 
 scene ecothermScene = {
@@ -47,12 +47,8 @@ scene ecothermScene = {
   ligthweak = loadImage(Images/ligthWeak.png).
   ligthmiddle = loadImage(Images/ligthMiddle.png).
   ligthstrong = loadImage(Images/ligthStrong.png).
-  
-  window_left_open_br = loadImage(Images/window_left_open_BR.png).
-  window_right_open_br = loadImage(Images/window_right_open_BR.png).
 
   window_LR = loadImage(Images/window_LR.png).
-
   window_open_LR = loadImage(Images/window_open_LR.png).
 
 
@@ -190,22 +186,15 @@ scene ecothermScene = {
       
 
   widget window_left_BR = {
-        attributes = { left_br_window_status in Status.}
-        display = { 
-            left_br_window_status = closed -> window_left_br.
-            left_br_window_status = opened -> window_left_open_br.}
+        display = { window_left_br}
         init = { 
             wdL = top. 
             left_br_window_status = closed.}
         }
   widget window_right_BR = {
-        attributes = { right_br_window_status in Status.}
-        display = { 
-            right_br_window_status = closed -> window_right_br.
-            right_br_window_status = opened -> window_right_br. }
+        display = { window_right_br }
         init = { 
-            wdL = top.
-            right_br_window_status = closed.}
+            wdL = top.}
         }
   widget window_LR = {
         attributes = { lr_window_status in Status. }
@@ -553,7 +542,7 @@ proc Init_scene = draw_scene(ecothermScene);
               
        Open_window(name: Name) = 
        ( (name = left_br) ->
-              ( att(left_br_window_status,window_left_BR,ecothermScene,opened) )
+              (  move_to(window_left_BR,ecothermScene,x_coord(window_left_br_opened),y_coord(window_left_br)))
        )
        +
        (  (name = right_br) ->
@@ -567,12 +556,11 @@ proc Init_scene = draw_scene(ecothermScene);
 
        Close_window(name: Name) = 
        (  (name = left_br) ->
-              ( att(left_br_window_status,window_left_BR,ecothermScene,closed) )
+              ( move_to(window_left_BR,ecothermScene,x_coord(window_left_br),y_coord(window_left_br)))
        )
        +
        (  (name = right_br) ->
-              ( move_to(window_right_BR,ecothermScene,x_coord(window_right_br_closed),y_coord(window_right_br));
-                att(right_br_window_status,window_right_BR,ecothermScene,closed) )
+              ( move_to(window_right_BR,ecothermScene,x_coord(window_right_br),y_coord(window_right_br)))
        )
        +
        (  (name = LR) ->
@@ -580,17 +568,13 @@ proc Init_scene = draw_scene(ecothermScene);
                 att(lr_window_status,window_LR,ecothermScene,closed)  )
        ).
 
-        Init_windows = 
-
-            Window(left_br, opened) || Window(right_br, opened) || Window(LR, opened).
-
         Place_window(name: Name)=
             ( (name = left_br) ->
                 (place_at(window_left_BR,ecothermScene,x_coord(window_left_br),y_coord(window_left_br));
                 show(window_left_BR,ecothermScene)))
             +
             ( (name = right_br) ->
-                (place_at(window_right_BR,ecothermScene,x_coord(window_right_br_closed),y_coord(window_right_br));
+                (place_at(window_right_BR,ecothermScene,x_coord(window_right_br),y_coord(window_right_br));
                  show(window_right_BR,ecothermScene)))
             +
             ( (name = LR) ->
@@ -618,14 +602,10 @@ proc Init_scene = draw_scene(ecothermScene);
     Fermer_Fenetre = Close_window(left_br); Close_window(right_br);Interface + Close_window(LR);Interface.
     Ouvrir_Fenetre = Open_window(left_br); Open_window(right_br);Interface + Open_window(LR);Interface.
     GestionFenetre = Ouvrir_Fenetre + Fermer_Fenetre.
-    Interface_Jour = GestionTemperature + GestionLumiere + GestionFenetre.
-
-    Interface = Interface_Jour.
+    Interface = GestionTemperature + GestionLumiere + GestionFenetre.
 
     Init =  Init_scene; Interface.
     
-    //Init_windows.
-                
 
                   
               
