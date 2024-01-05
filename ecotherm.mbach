@@ -2,6 +2,7 @@ eset Seasons = { spring, summer, autumn, winter }.
      Light = {off,weak,middle,strong}.
      Segments = {window_left_br, window_right_br, window_lr}.
      Names = {left_br, right_br, LR}.
+     Status = {opened, closed}.
 
 
 eqn x_coord(weatherIcone) = 20.    y_coord(weatherIcone) = 20.
@@ -16,6 +17,9 @@ eqn x_coord(weatherIcone) = 20.    y_coord(weatherIcone) = 20.
     x_coord(window_left_br) = 740.        y_coord(window_left_br) = 0.
     x_coord(window_right_br) = 820.       y_coord(window_right_br) = 0.
     x_coord(window_lr) = 86.              y_coord(window_lr) = 0.
+    x_coord(window_right_br_opened) = 890.
+
+    state(closed) = opened.             state(opened) = closed.
 
 scene ecothermScene = {
 
@@ -27,6 +31,8 @@ scene ecothermScene = {
    window_left_br = loadImage(Images/window_left_BR.png).
    window_right_br = loadImage(Images/window_right_BR.png).
 
+
+  neutralTemp = loadImage(Images/resized/chauffage_neutre.png).
   coldTemp = loadImage(Images/resized/printemps.png).
   veryColdTemp = loadImage(Images/resized/ete.png).
   hotTemp = loadImage(Images/resized/automne.png).
@@ -48,6 +54,21 @@ scene ecothermScene = {
   window_LR = loadImage(Images/window_LR.png).
 
   window_open_LR = loadImage(Images/window_open_LR.png).
+
+
+
+  widget baseTempSalon = {
+          display = { neutralTemp }
+          init = { wdL = top. }
+      }
+  widget baseTempSdb = {
+          display = { neutralTemp }
+          init = { wdL = top. }
+      }
+  widget baseTempChambre = {
+          display = { neutralTemp }
+          init = { wdL = top. }
+      }
 
 
   widget springTempSalon = {
@@ -153,6 +174,7 @@ scene ecothermScene = {
           display = { ligthmiddle }
           init = { wdL = top. }
       }
+      
   widget stronglightSalon = {
           display = { ligthstrong }
           init = { wdL = top. }
@@ -166,29 +188,34 @@ scene ecothermScene = {
           init = { wdL = top. }
       }
       
-  widget window_left_close_BR = {
-        display = { window_left_br }
-        init = { wdL = top. }
+
+  widget window_left_BR = {
+        attributes = { left_br_window_status in Status.}
+        display = { 
+            left_br_window_status = closed -> window_left_br.
+            left_br_window_status = opened -> window_left_open_br.}
+        init = { 
+            wdL = top. 
+            left_br_window_status = closed.}
         }
-  widget window_right_close_BR = {
-        display = { window_right_br }
-        init = { wdL = top. }
+  widget window_right_BR = {
+        attributes = { right_br_window_status in Status.}
+        display = { 
+            right_br_window_status = closed -> window_right_br.
+            right_br_window_status = opened -> window_right_br. }
+        init = { 
+            wdL = top.
+            right_br_window_status = closed.}
         }
-  widget window_close_living_room = {
-        display = {window_LR}
-        init = {wdL = top.}
-  }
-  widget window_left_open_BR = {
-        display = { window_left_open_br }
-        init = { wdL = top. }
-        }
-  widget window_right_open_BR = {
-        display = { window_right_open_br }
-        init = { wdL = top. }
-        }
-  widget window_open_living_room = {
-        display = {window_open_LR}
-        init = {wdL = top.}
+  widget window_LR = {
+        attributes = { lr_window_status in Status. }
+        display = { 
+            lr_window_status = closed -> window_LR.
+            lr_window_status = opened -> window_open_LR.}
+        init = {
+            wdL = top.
+            lr_window_status = closed.}
+
   }
 
 
@@ -220,11 +247,10 @@ proc Init_scene = draw_scene(ecothermScene);
             place_at(baselightChambre,ecothermScene,x_coord(lightChambre),y_coord(lightChambre));
             tell(baselightChambre);
             show(baselightChambre,ecothermScene);
-            Close_window(left_br);
-            Close_window(right_br);
-            Close_window(LR).
-
-
+            Place_window(left_br);
+            Place_window(right_br);
+            Place_window(LR).
+            
      RemoveIcone (s: Seasons) =
          ( (s = spring) -> (
              ( get(summerIcone); hide(summerIcone,ecothermScene) )
@@ -527,41 +553,61 @@ proc Init_scene = draw_scene(ecothermScene);
               
        Open_window(name: Name) = 
        ( (name = left_br) ->
-              ( hide(window_left_close_BR,ecothermScene);
-              place_at(window_left_open_BR,ecothermScene,x_coord(window_left_br),y_coord(window_left_br));
-              show(window_left_open_BR,ecothermScene) )
+              ( att(left_br_window_status,window_left_BR,ecothermScene,opened) )
        )
        +
        (  (name = right_br) ->
-              ( hide(window_right_close_BR,ecothermScene);
-              place_at(window_right_open_BR,ecothermScene,x_coord(window_right_br),y_coord(window_right_br));
-              show(window_right_open_BR,ecothermScene) )
+              ( move_to(window_right_BR,ecothermScene,x_coord(window_right_br_opened),y_coord(window_right_br)))
        )
        +
        (  (name = LR) ->
-              ( hide(window_close_living_room,ecothermScene);
-              place_at(window_open_living_room,ecothermScene,x_coord(window_lr),y_coord(window_lr));
-              show(window_open_living_room,ecothermScene) )
+              ( move_to(window_LR,ecothermScene,0,y_coord(window_lr));
+                att(lr_window_status,window_LR,ecothermScene,opened) )
        ).
 
        Close_window(name: Name) = 
        (  (name = left_br) ->
-              ( hide(window_left_open_BR,ecothermScene);
-              place_at(window_left_close_BR,ecothermScene,x_coord(window_left_br),y_coord(window_left_br));
-              show(window_left_close_BR,ecothermScene) )
+              ( att(left_br_window_status,window_left_BR,ecothermScene,closed) )
        )
        +
        (  (name = right_br) ->
-              ( hide(window_right_open_BR,ecothermScene);
-              place_at(window_right_close_BR,ecothermScene,x_coord(window_right_br),y_coord(window_right_br));
-              show(window_right_close_BR,ecothermScene) )
+              ( move_to(window_right_BR,ecothermScene,x_coord(window_right_br_closed),y_coord(window_right_br));
+                att(right_br_window_status,window_right_BR,ecothermScene,closed) )
        )
        +
        (  (name = LR) ->
-              ( hide(window_open_living_room,ecothermScene);
-              place_at(window_close_living_room,ecothermScene,x_coord(window_lr),y_coord(window_lr));
-              show(window_close_living_room,ecothermScene) )
+              ( move_to(window_LR,ecothermScene,x_coord(window_lr),y_coord(window_lr));
+                att(lr_window_status,window_LR,ecothermScene,closed)  )
        ).
+
+        Init_windows = 
+
+            Window(left_br, opened) || Window(right_br, opened) || Window(LR, opened).
+
+        Place_window(name: Name)=
+            ( (name = left_br) ->
+                (place_at(window_left_BR,ecothermScene,x_coord(window_left_br),y_coord(window_left_br));
+                show(window_left_BR,ecothermScene)))
+            +
+            ( (name = right_br) ->
+                (place_at(window_right_BR,ecothermScene,x_coord(window_right_br_closed),y_coord(window_right_br));
+                 show(window_right_BR,ecothermScene)))
+            +
+            ( (name = LR) ->
+                (place_at(window_LR,ecothermScene,x_coord(window_lr),y_coord(window_lr));
+                 show(window_LR,ecothermScene))).
+
+
+           
+        
+        Window(name:Name, s:Status) =
+            ( ( s = opened ) ->
+                ( Open_window(name);
+                Window(name, closed)))
+            +
+            ( ( s = closed ) ->
+                (Close_window(name);
+                Window(name, opened))).
 
 
 
@@ -577,7 +623,10 @@ proc Init_scene = draw_scene(ecothermScene);
     Interface = Interface_Jour.
 
     Init =  Init_scene; Interface.
+    
+    //Init_windows.
                 
+
                   
               
 
