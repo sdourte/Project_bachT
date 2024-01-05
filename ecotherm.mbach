@@ -197,7 +197,7 @@ scene ecothermScene = {
         attributes = { right_br_window_status in Status.}
         display = { 
             right_br_window_status = closed -> window_right_br.
-            right_br_window_status = opened -> window_right_open_br. }
+            right_br_window_status = opened -> window_right_br. }
         init = { 
             wdL = top.
             right_br_window_status = closed.}
@@ -535,8 +535,7 @@ proc Init = draw_scene(ecothermScene);
        )
        +
        (  (name = right_br) ->
-              ( move_to(window_right_BR,ecothermScene,x_coord(window_right_br_opened),y_coord(window_right_br));
-                att(right_br_window_status,window_right_BR,ecothermScene,opened) )
+              ( move_to(window_right_BR,ecothermScene,x_coord(window_right_br_opened),y_coord(window_right_br)))
        )
        +
        (  (name = LR) ->
